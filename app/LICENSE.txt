@@ -1,0 +1,20 @@
+Copyright (c) 2025 Niraj Bhakta (Niraj037). All rights reserved.
+Contact: nirajexoxy@gmail.com
+
+This software is the intellectual property of Niraj Bhakta and is provided exclusively for the commercial use of the designated client. Unauthorized use is strictly prohibited.
+
+You MAY NOT:
+- Copy, modify, adapt, translate, merge, publish, sublicense, distribute, or create derivative works based on this software;
+- Use this software for any purpose other than the one agreed upon in the client contract;
+- Redistribute or share the software or any part of it in any form;
+- Remove or alter any copyright, credit, or proprietary notices.
+
+You MUST:
+- Retain all credit to the original author (Niraj Bhakta) in any permitted usage;
+- Ensure this software is not modified or repurposed beyond the original scope.
+
+This license does NOT grant any rights of ownership. All rights remain with the original author.
+
+Violation of this license may result in legal action.
+
+For licensing inquiries, contact nirajexoxy@gmail.com
