@@ -39,15 +39,21 @@ export default function VideoPreloader({ onComplete, minDisplayTime = 3000 }: Vi
         setLoadingStage('preloading')
         setProgress(15)
 
-        // Preload videos with progress tracking
+        // Preload videos with progress tracking - Vercel optimized
         const preloadPromises = criticalVideos.map(async (video, index) => {
           try {
+            // Only hero video gets full preload, others get metadata
+            const isHeroVideo = index === 0
             await preloadCritical([video])
+            
             const newProgress = 15 + ((index + 1) / criticalVideos.length) * 65
             setProgress(Math.min(newProgress, 80))
             
             const stats = getStats()
             setVideoStats(stats)
+            
+            // Log Vercel-optimized loading
+            console.log(`${isHeroVideo ? 'Full' : 'Metadata'} preload: ${video}`)
           } catch (error) {
             console.warn(`Failed to preload ${video}:`, error)
           }
@@ -232,15 +238,15 @@ export default function VideoPreloader({ onComplete, minDisplayTime = 3000 }: Vi
           ))}
         </motion.div>
 
-        {/* Performance tip */}
+        {/* Performance tip for AWS S3 hosting */}
         <motion.div
           className="absolute bottom-8 text-center text-xs text-white/40 font-mono max-w-md px-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
         >
-          <p>Optimizing videos for your device...</p>
-          <p className="mt-1">Total video size: 59.18 MB</p>
+          <p>Loading videos from AWS S3...</p>
+          <p className="mt-1">Hero: Full preload | Stories: Metadata only</p>
         </motion.div>
       </motion.div>
     </AnimatePresence>

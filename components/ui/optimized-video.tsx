@@ -1,9 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from 'react'
+import { VIDEO_URLS, VideoKey } from '@/lib/video-config'
 
 interface OptimizedVideoProps {
-  src: string
+  videoKey: VideoKey  // Use video key instead of src
   className?: string
   autoPlay?: boolean
   muted?: boolean
@@ -17,13 +18,13 @@ interface OptimizedVideoProps {
 }
 
 export default function OptimizedVideo({
-  src,
+  videoKey,  // Use videoKey instead of src
   className = '',
   autoPlay = true,
   muted = true,
   loop = true,
   playsInline = true,
-  preload = 'auto',
+  preload = 'metadata',  // Default to metadata for GitHub hosting
   priority = false,
   onLoadStart,
   onCanPlay,
@@ -32,6 +33,9 @@ export default function OptimizedVideo({
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
+
+  // Get GitHub URL from videoKey
+  const src = VIDEO_URLS[videoKey]
 
   useEffect(() => {
     const video = videoRef.current
@@ -72,7 +76,7 @@ export default function OptimizedVideo({
     const handleError = () => {
       setHasError(true)
       onError?.()
-      console.warn(`Video failed to load: ${src}`)
+      console.warn(`S3 video failed to load: ${videoKey} (${src})`)
     }
 
     const handleLoadedData = () => {
@@ -94,12 +98,12 @@ export default function OptimizedVideo({
       video.removeEventListener('error', handleError)
       video.removeEventListener('loadeddata', handleLoadedData)
     }
-  }, [src, autoPlay, priority, preload, onLoadStart, onCanPlay, onError])
+  }, [src, videoKey, autoPlay, priority, preload, onLoadStart, onCanPlay, onError])
 
   if (hasError) {
     return (
       <div className={`bg-black/50 flex items-center justify-center ${className}`}>
-        <span className="text-white/50 text-sm">Video unavailable</span>
+        <span className="text-white/50 text-sm">S3 video unavailable: {videoKey}</span>
       </div>
     )
   }
@@ -107,7 +111,7 @@ export default function OptimizedVideo({
   return (
     <video
       ref={videoRef}
-      className={`optimized-video ${className} ${!isLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}
+      className={`s3-video ${className} ${!isLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}
       autoPlay={autoPlay}
       muted={muted}
       loop={loop}
@@ -116,7 +120,7 @@ export default function OptimizedVideo({
       crossOrigin="anonymous"
     >
       <source src={src} type="video/mp4" />
-      Your browser does not support the video tag.
+      S3 video not supported in your browser.
     </video>
   )
 }

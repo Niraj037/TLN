@@ -1,6 +1,8 @@
 "use client"
 
-// Video preloading service for optimized loading
+import { VIDEO_URLS, VideoKey, VIDEO_METADATA } from './video-config';
+
+// Video preloading service optimized for GitHub Releases hosting
 class VideoPreloader {
   private static instance: VideoPreloader
   private preloadedVideos: Map<string, HTMLVideoElement> = new Map()
@@ -14,27 +16,31 @@ class VideoPreloader {
     return VideoPreloader.instance
   }
 
-  // Preload critical videos during app initialization
-  async preloadCriticalVideos(videoSources: string[]): Promise<void> {
-    const criticalVideos = [
-      '/vids/drumkit-optimized-v2.mp4', // Hero video - highest priority
-      '/vids/drumcym-optimized.mp4',    // First story video
-    ]
-
-    const videosToPreload = videoSources.length ? videoSources : criticalVideos
+  // Preload critical videos from AWS S3 during app initialization
+  async preloadCriticalVideos(videoKeys?: VideoKey[]): Promise<void> {
+    const criticalVideos: VideoKey[] = videoKeys || ['hero', 'drumcym'] // Hero + first story
 
     try {
+      console.log('🎬 Starting AWS S3 video preload...')
+      
+      // Preload hero video with full priority, others with metadata only
       await Promise.allSettled(
-        videosToPreload.map(src => this.preloadVideo(src, true))
+        criticalVideos.map(async (key, index) => {
+          const priority = index === 0 // Only hero gets full preload
+          const url = VIDEO_URLS[key]
+          console.log(`⏳ Preloading ${key}: ${VIDEO_METADATA[key].size}`)
+          return this.preloadVideoMetadata(url, priority)
+        })
       )
-      console.log('Critical videos preloaded successfully')
+      
+      console.log('✅ AWS S3 video preload complete!')
     } catch (error) {
-      console.warn('Some critical videos failed to preload:', error)
+      console.warn('⚠️ Some S3 videos failed to preload:', error)
     }
   }
 
-  // Preload individual video with caching
-  async preloadVideo(src: string, priority = false): Promise<HTMLVideoElement> {
+  // Lightweight metadata preloading for AWS S3
+  async preloadVideoMetadata(src: string, priority = false): Promise<HTMLVideoElement> {
     if (this.preloadedVideos.has(src)) {
       return this.preloadedVideos.get(src)!
     }
@@ -46,28 +52,36 @@ class VideoPreloader {
     const loadPromise = new Promise<HTMLVideoElement>((resolve, reject) => {
       const video = document.createElement('video')
       
-      // Optimize video element
-      video.preload = priority ? 'auto' : 'metadata'
+      // Optimize for AWS S3 hosting
+      video.preload = priority ? 'auto' : 'metadata' // Only hero gets full preload
       video.muted = true
       video.playsInline = true
       video.crossOrigin = 'anonymous'
       
       // Performance optimizations
-      video.style.transform = 'translateZ(0)'
-      video.style.willChange = 'transform'
-      video.style.backfaceVisibility = 'hidden'
+      video.style.position = 'absolute'
+      video.style.visibility = 'hidden'
+      video.style.width = '1px'
+      video.style.height = '1px'
+      video.style.opacity = '0'
       
-      // Mobile optimizations
-      if (window.innerWidth < 768) {
-        video.preload = 'metadata' // Conserve bandwidth on mobile
-      }
-
       let resolved = false
 
-      const onCanPlay = () => {
+      const onLoadedMetadata = () => {
         if (!resolved) {
           resolved = true
           this.preloadedVideos.set(src, video)
+          console.log(`✅ S3 video loaded: ${src.split('/').pop()}`)
+          resolve(video)
+          cleanup()
+        }
+      }
+
+      const onCanPlay = () => {
+        if (!resolved && priority) {
+          resolved = true
+          this.preloadedVideos.set(src, video)
+          console.log(`🎯 S3 hero video ready: ${src.split('/').pop()}`)
           resolve(video)
           cleanup()
         }
@@ -76,30 +90,33 @@ class VideoPreloader {
       const onError = () => {
         if (!resolved) {
           resolved = true
-          reject(new Error(`Failed to preload video: ${src}`))
+          console.error(`❌ S3 video failed: ${src.split('/').pop()}`)
+          reject(new Error(`Failed to preload S3 video: ${src}`))
           cleanup()
         }
       }
 
       const cleanup = () => {
+        video.removeEventListener('loadedmetadata', onLoadedMetadata)
         video.removeEventListener('canplay', onCanPlay)
         video.removeEventListener('error', onError)
         this.loadingPromises.delete(src)
       }
 
-      video.addEventListener('canplay', onCanPlay)
+      video.addEventListener('loadedmetadata', onLoadedMetadata)
+      if (priority) video.addEventListener('canplay', onCanPlay)
       video.addEventListener('error', onError)
 
       video.src = src
       video.load()
 
-      // Timeout for slow connections
+      // Timeout for AWS S3 CDN
       setTimeout(() => {
         if (!resolved) {
-          console.warn(`Video preload timeout: ${src}`)
+          console.warn(`⏰ S3 video timeout: ${src.split('/').pop()}`)
           onError()
         }
-      }, priority ? 5000 : 3000)
+      }, priority ? 5000 : 3000) // Good timeout for S3
     })
 
     this.loadingPromises.set(src, loadPromise)
@@ -111,7 +128,7 @@ class VideoPreloader {
     return this.preloadedVideos.get(src) || null
   }
 
-  // Lazy load videos based on viewport intersection
+  // Lazy load videos based on viewport intersection - Vercel optimized
   setupLazyLoading(videoElement: HTMLVideoElement, src: string): void {
     if (this.observers.has(src)) {
       return
@@ -121,8 +138,9 @@ class VideoPreloader {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
-            this.preloadVideo(src).then(() => {
-              console.log(`Lazy loaded: ${src}`)
+            // For Vercel, just prepare metadata instead of full preload
+            this.preloadVideoMetadata(src).then(() => {
+              console.log(`Lazy loaded metadata: ${src}`)
             }).catch(console.warn)
             
             observer.unobserve(videoElement)
@@ -131,8 +149,8 @@ class VideoPreloader {
         })
       },
       {
-        rootMargin: '50px',
-        threshold: [0.1, 0.25, 0.5]
+        rootMargin: '100px', // Increased margin for Vercel
+        threshold: [0.1]
       }
     )
 
@@ -140,14 +158,15 @@ class VideoPreloader {
     this.observers.set(src, observer)
   }
 
-  // Prefetch next videos based on scroll position
+  // Prefetch next videos based on scroll position - Vercel optimized
   prefetchUpcoming(currentVideoIndex: number, allVideoSources: string[]): void {
-    const prefetchCount = window.innerWidth < 768 ? 1 : 2
+    const prefetchCount = 1 // Reduced for Vercel hosting
     const startIndex = currentVideoIndex + 1
     const endIndex = Math.min(startIndex + prefetchCount, allVideoSources.length)
 
     for (let i = startIndex; i < endIndex; i++) {
-      this.preloadVideo(allVideoSources[i]).catch(console.warn)
+      // Only prefetch metadata on Vercel
+      this.preloadVideoMetadata(allVideoSources[i]).catch(console.warn)
     }
   }
 
@@ -180,12 +199,12 @@ import { useEffect, useCallback } from 'react'
 export function useVideoPreloader() {
   const preloader = VideoPreloader.getInstance()
 
-  const preloadCritical = useCallback(async (videos?: string[]) => {
-    await preloader.preloadCriticalVideos(videos || [])
+  const preloadCritical = useCallback(async (videos?: VideoKey[]) => {
+    await preloader.preloadCriticalVideos(videos)
   }, [preloader])
 
   const preloadVideo = useCallback(async (src: string, priority = false) => {
-    return preloader.preloadVideo(src, priority)
+    return preloader.preloadVideoMetadata(src, priority)
   }, [preloader])
 
   const setupLazyLoading = useCallback((element: HTMLVideoElement, src: string) => {

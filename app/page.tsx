@@ -9,6 +9,7 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import VideoPreloader from "../components/ui/video-preloader"
 import OptimizedVideo from "../components/ui/optimized-video"
+import { VideoKey } from "../lib/video-config"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -64,7 +65,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      video: "/vids/drumcym-optimized.mp4",
+      videoKey: "drumcym" as VideoKey,
       year: "2019",
       color: "#ff6b6b",
     },
@@ -72,7 +73,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      video: "/vids/guitar-optimized.mp4",
+      videoKey: "guitar" as VideoKey,
       year: "2020",
       color: "#4ecdc4",
     },
@@ -80,7 +81,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",   
-      video: "/vids/vinyl1-optimized.mp4",
+      videoKey: "vinyl1" as VideoKey,
       year: "2021",
       color: "#45b7d1",
     },
@@ -88,7 +89,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      video: "/vids/vinyl2-optimized-v2.mp4",
+      videoKey: "vinyl2" as VideoKey,
       year: "2024",
       color: "#f7b731",
     },
@@ -703,21 +704,16 @@ export default function TheLastNote() {
         style={{ y: heroParallax }}
       >
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
+          <OptimizedVideo
+            videoKey="hero"
             className="hero-video w-full h-full object-cover opacity-40"
-            style={{
-              willChange: "transform",
-              transform: "translateZ(0)",
-              backfaceVisibility: "hidden",
-            }}
-          >
-            <source src="/vids/drumkit-optimized-v2.mp4" type="video/mp4" />
-          </video>
+            autoPlay={true}
+            loop={true}
+            muted={true}
+            playsInline={true}
+            preload="auto"
+            priority={true}
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90" />
         </div>
 
@@ -763,21 +759,16 @@ export default function TheLastNote() {
           >
             {/* Background Video */}
             <div className="absolute inset-0 overflow-hidden">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
+              <OptimizedVideo
+                videoKey={story.videoKey}
                 className="story-bg-video w-full h-full object-cover"
-                style={{
-                  willChange: "transform",
-                  transform: "translateZ(0)",
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                <source src={story.video} type="video/mp4" />
-              </video>
+                autoPlay={true}
+                loop={true}
+                muted={true}
+                playsInline={true}
+                preload="metadata"
+                priority={false}
+              />
               <div className="absolute inset-0 bg-black/80" />
               <div
                 className="story-color-overlay absolute inset-0 mix-blend-overlay"
