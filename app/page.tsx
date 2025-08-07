@@ -7,6 +7,8 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import VideoPreloader from "../components/ui/video-preloader"
+import OptimizedVideo from "../components/ui/optimized-video"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -40,13 +42,10 @@ export default function TheLastNote() {
     return () => window.removeEventListener("resize", checkMobile)
   }, [])
 
-  // Simple preloader logic
+  // Enhanced preloader with video optimization
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 2500) // 2.5 seconds for simple preloader
-
-    return () => clearTimeout(timer)
+    // The VideoPreloader component will handle all video preloading
+    // and call setIsLoading(false) when ready
   }, [])
 
   // Mouse tracking for interactive light effect (disabled on mobile)
@@ -65,7 +64,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      video: "/vids/drumcym.mp4?height=1080&width=1920",
+      video: "/vids/drumcym-optimized.mp4",
       year: "2019",
       color: "#ff6b6b",
     },
@@ -73,7 +72,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      video: "/vids/guitar.mp4?height=1080&width=1920",
+      video: "/vids/guitar-optimized.mp4",
       year: "2020",
       color: "#4ecdc4",
     },
@@ -81,7 +80,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",   
-      video: "/vids/vinyl1.mp4?height=1080&width=1920",
+      video: "/vids/vinyl1-optimized.mp4",
       year: "2021",
       color: "#45b7d1",
     },
@@ -89,7 +88,7 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      video: "/vids/vinyl2.mp4?height=1080&width=1920",
+      video: "/vids/vinyl2-optimized-v2.mp4",
       year: "2024",
       color: "#f7b731",
     },
@@ -670,7 +669,7 @@ export default function TheLastNote() {
   )
 
   if (isLoading) {
-    return <PreloaderComponent />
+    return <VideoPreloader onComplete={() => setIsLoading(false)} minDisplayTime={2500} />
   }
 
   return (
@@ -709,7 +708,7 @@ export default function TheLastNote() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             className="hero-video w-full h-full object-cover opacity-40"
             style={{
               willChange: "transform",
@@ -717,7 +716,7 @@ export default function TheLastNote() {
               backfaceVisibility: "hidden",
             }}
           >
-            <source src="/vids/drumkit.mp4?height=1080&width=1920" type="video/mp4" />
+            <source src="/vids/drumkit-optimized-v2.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90" />
         </div>
@@ -769,7 +768,7 @@ export default function TheLastNote() {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 className="story-bg-video w-full h-full object-cover"
                 style={{
                   willChange: "transform",

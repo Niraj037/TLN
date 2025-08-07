@@ -1,0 +1,206 @@
+/* Video Performance Optimizations */
+.optimized-video {
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  
+  /* Smooth rendering */
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  
+  /* Memory optimization */
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  
+  /* Prevent layout shifts */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Hero video specific optimizations */
+.hero-video {
+  /* Preload optimization */
+  content-visibility: auto;
+  contain: layout style paint;
+  
+  /* Better compression rendering */
+  filter: brightness(1) contrast(1.05) saturate(1.1);
+  
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    filter: brightness(0.9) contrast(1.1) saturate(1.05);
+    transform: scale(1.02) translateZ(0);
+  }
+}
+
+/* Story video optimizations */
+.story-video {
+  /* Lazy loading hint */
+  content-visibility: auto;
+  contain-intrinsic-size: 1920px 1080px;
+  
+  /* Smooth transitions */
+  transition: opacity 0.5s ease-in-out, transform 0.8s ease-out;
+  
+  /* Performance boost */
+  contain: layout style paint;
+  
+  /* Mobile performance */
+  @media (max-width: 768px) {
+    contain: none;
+    will-change: auto;
+  }
+}
+
+/* Video loading states */
+.video-loading {
+  background: linear-gradient(45deg, #000, #111, #000);
+  background-size: 400% 400%;
+  animation: videoLoading 2s ease-in-out infinite;
+}
+
+@keyframes videoLoading {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Video container optimizations */
+.video-container {
+  /* Contain layout calculations */
+  contain: layout style;
+  
+  /* Prevent overflow issues */
+  overflow: hidden;
+  
+  /* GPU layer creation */
+  transform: translateZ(0);
+  isolation: isolate;
+}
+
+/* Critical video preloading */
+.video-preload-critical {
+  /* Force immediate loading */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  
+  /* Priority loading hint */
+  content-visibility: visible;
+}
+
+/* Memory-efficient video */
+.video-memory-optimized {
+  /* Reduce memory footprint */
+  image-rendering: optimizeSpeed;
+  
+  /* Efficient compositing */
+  transform-style: flat;
+  
+  /* Mobile memory optimization */
+  @media (max-width: 768px) {
+    /* Lower quality for mobile to save memory */
+    filter: blur(0.5px) brightness(0.95);
+  }
+}
+
+/* Video intersection observer optimization */
+.video-lazy {
+  /* Default state before loading */
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.6s ease-out, transform 1.2s ease-out;
+}
+
+.video-lazy.loaded {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Reduce video quality on slow connections */
+@media (max-width: 768px) and (max-resolution: 150dpi) {
+  .optimized-video {
+    filter: brightness(0.85) contrast(1.15) blur(0.3px);
+  }
+}
+
+/* High DPI optimizations */
+@media (min-resolution: 200dpi) {
+  .optimized-video {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+}
+
+/* Prefetch critical videos */
+.video-prefetch::before {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  background-image: url('/vids/drumkit-optimized-v2.mp4');
+  background-size: 1px 1px;
+}
+
+/* Video performance monitoring */
+.video-performance-monitor {
+  position: relative;
+}
+
+.video-performance-monitor::after {
+  content: attr(data-performance);
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-family: monospace;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.video-performance-monitor:hover::after {
+  opacity: 1;
+}
+
+/* Smooth video switching */
+.video-crossfade {
+  position: relative;
+}
+
+.video-crossfade video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.video-crossfade .video-entering {
+  opacity: 0;
+  z-index: 2;
+}
+
+.video-crossfade .video-entering.active {
+  opacity: 1;
+}
+
+.video-crossfade .video-exiting {
+  opacity: 1;
+  z-index: 1;
+}
+
+.video-crossfade .video-exiting.active {
+  opacity: 0;
+}

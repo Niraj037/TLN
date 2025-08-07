@@ -1,13 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { AlertTriangle, Home, Music, X } from "lucide-react"
+import { motion } from "framer-motion"
+import { AlertTriangle, Home } from "lucide-react"
 import Link from "next/link"
 
 export default function NotFound() {
   const [audioRef, setAudioRef] = useState<HTMLAudioElement | null>(null)
-  const [showNotification, setShowNotification] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -17,27 +16,25 @@ export default function NotFound() {
   useEffect(() => {
     if (!mounted || !audioRef) return
 
+    // Function to play audio
+    const playAudio = () => {
+      audioRef.play().catch(() => {
+        // If autoplay fails, we'll try again on user interaction
+        document.addEventListener('click', () => {
+          audioRef.play().catch(console.log)
+        }, { once: true })
+        
+        document.addEventListener('touchstart', () => {
+          audioRef.play().catch(console.log)
+        }, { once: true })
+      })
+    }
+
     // Start music after page renders
-    const timer = setTimeout(() => {
-      audioRef.play().catch(console.log)
-
-      // Show notification after music starts
-      setTimeout(() => {
-        setShowNotification(true)
-      }, 1000)
-
-      // Auto-hide notification
-      setTimeout(() => {
-        setShowNotification(false)
-      }, 8000)
-    }, 1500)
+    const timer = setTimeout(playAudio, 1000)
 
     return () => clearTimeout(timer)
   }, [mounted, audioRef])
-
-  const closeNotification = () => {
-    setShowNotification(false)
-  }
 
   if (!mounted) {
     return (
@@ -52,36 +49,17 @@ export default function NotFound() {
 
   return (
     <div className="bg-black text-white font-manrope min-h-screen">
-      {/* Hidden Audio */}
-      <audio ref={(audio) => setAudioRef(audio)} className="hidden" loop>
+      {/* Hidden Audio with better compatibility */}
+      <audio 
+        ref={(audio) => setAudioRef(audio)} 
+        className="hidden" 
+        loop 
+        preload="auto"
+        playsInline
+      >
         <source src="/runaway.mp3" type="audio/mpeg" />
+        <source src="/runaway.mp3" type="audio/mp3" />
       </audio>
-
-      {/* Simple Notification */}
-      <AnimatePresence>
-        {showNotification && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 max-w-md w-full mx-4"
-          >
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-              <div className="flex items-center gap-3">
-                <Music className="w-5 h-5 text-white" />
-                <div className="flex-1">
-                  <p className="text-white text-sm">
-                    Kanye West - one of the greatest hip-hop artists. Let's celebrate his music.
-                  </p>
-                </div>
-                <button onClick={closeNotification} className="text-white/70 hover:text-white transition-colors">
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <main className="w-full">
         {/* Simple 404 Section */}
