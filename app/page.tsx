@@ -73,7 +73,6 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      image: "/placeholder.svg?height=1080&width=1920&text=First+Stage+Performance+Spotlight+Dramatic",
       video: "/vids/guitar.mp4?height=1080&width=1920",
       year: "2020",
       color: "#4ecdc4",
@@ -81,8 +80,7 @@ export default function TheLastNote() {
     {
       title: "Title",
       subtitle: "subtitle",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      image: "/placeholder.svg?height=1080&width=1920&text=Recording+Studio+Sessions+Professional+Moody",
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",   
       video: "/vids/vinyl1.mp4?height=1080&width=1920",
       year: "2021",
       color: "#45b7d1",
@@ -91,7 +89,6 @@ export default function TheLastNote() {
       title: "Title",
       subtitle: "subtitle",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.",
-      image: "/placeholder.svg?height=1080&width=1920&text=Concert+Hall+Performance+Epic+Cinematic",
       video: "/vids/vinyl2.mp4?height=1080&width=1920",
       year: "2024",
       color: "#f7b731",
@@ -639,10 +636,10 @@ export default function TheLastNote() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 1 }}
       >
-        <p className="text-lg md:text-xl font-light italic mb-4 font-manrope text-white/90">
+        <p className="text-lg md:text-xl font-light italic mb-4 font-inter text-white/90">
           "Everything I’m not makes me everything I am."
         </p>
-        <p className="text-sm text-amber-200/60 font-manrope">— YE (Kanye West)</p>
+        <p className="text-sm text-amber-200/60 font-inter">— YE (Kanye West)</p>
       </motion.div>
 
       {/* Loading dots */}
@@ -677,7 +674,7 @@ export default function TheLastNote() {
   }
 
   return (
-    <div className="bg-black text-white min-h-screen overflow-x-hidden font-manrope">
+    <div className="bg-black text-white min-h-screen overflow-x-hidden font-inter">
       {/* Mouse-following light effect (desktop only) */}
       {!isMobile && (
         <motion.div
@@ -726,10 +723,10 @@ export default function TheLastNote() {
         </div>
 
         <motion.div className="relative z-10 text-center px-4 sm:px-6 md:px-8" style={{ y: textParallax }}>
-          <h1 className="hero-title text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[14rem] font-bold tracking-[0.02em] sm:tracking-[0.05em] md:tracking-[0.08em] lg:tracking-[0.1em] mb-4 sm:mb-6 md:mb-8 font-manrope leading-[0.8] sm:leading-[0.85] md:leading-[0.9]">
-            The Last Note
+          <h1 className="hero-title text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[14rem] font-bold tracking-[0.02em] sm:tracking-[0.05em] md:tracking-[0.08em] lg:tracking-[0.1em] mb-4 sm:mb-6 md:mb-8 leading-[0.8] sm:leading-[0.85] md:leading-[0.9] font-anton uppercase">
+            The <span className="text-amber-400 font-righteous">Last</span> Note
           </h1>
-          <p className="hero-subtitle text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-light tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] lg:tracking-[0.3em] opacity-60 font-manrope max-w-6xl mx-auto">
+          <p className="hero-subtitle text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-light tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] lg:tracking-[0.3em] opacity-60 font-inter max-w-6xl mx-auto">
             Lorem ipsum dolor sit amet.
           </p>
         </motion.div>
@@ -747,7 +744,7 @@ export default function TheLastNote() {
           >
             <div className="flex items-center space-x-2 sm:space-x-2.5 md:space-x-3 relative z-10">
               <Music className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:text-white transition-colors duration-700" />
-              <span className="text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] font-manrope group-hover:text-white transition-colors duration-700">
+              <span className="text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] font-jetbrains group-hover:text-white transition-colors duration-700">
                 JAM NIGHTS
               </span>
             </div>
@@ -774,7 +771,6 @@ export default function TheLastNote() {
                 playsInline
                 preload="metadata"
                 className="story-bg-video w-full h-full object-cover"
-                poster={story.image}
                 style={{
                   willChange: "transform",
                   transform: "translateZ(0)",
@@ -792,7 +788,7 @@ export default function TheLastNote() {
 
             {/* Year Display */}
             <div className="story-year absolute top-4 sm:top-6 md:top-8 lg:top-16 left-2 sm:left-4 md:left-8 lg:left-16">
-              <span className="text-[4rem] sm:text-[6rem] md:text-[10rem] lg:text-[15rem] xl:text-[20rem] font-bold opacity-5 font-manrope leading-none select-none">
+              <span className="text-[4rem] sm:text-[6rem] md:text-[10rem] lg:text-[15rem] xl:text-[20rem] font-bold opacity-5 font-anton leading-none select-none">
                 {story.year}
               </span>
             </div>
@@ -800,21 +796,21 @@ export default function TheLastNote() {
             {/* Story Content */}
             <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 md:px-8 text-center">
               <motion.h2
-                className="story-title text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-3 sm:mb-4 md:mb-6 tracking-wide font-manrope leading-tight"
+                className="story-title text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-3 sm:mb-4 md:mb-6 tracking-wide font-oswald leading-tight uppercase"
                 style={{ perspective: isMobile ? "none" : "1000px" }}
               >
                 {story.title}
               </motion.h2>
 
               <motion.p
-                className="story-subtitle text-base sm:text-lg md:text-xl lg:text-2xl font-light mb-6 sm:mb-8 md:mb-16 opacity-70 font-manrope tracking-wider max-w-4xl mx-auto"
+                className="story-subtitle text-base sm:text-lg md:text-xl lg:text-2xl font-light mb-6 sm:mb-8 md:mb-16 opacity-70 font-inter tracking-wider max-w-4xl mx-auto"
                 style={{ perspective: isMobile ? "none" : "1000px" }}
               >
                 {story.subtitle}
               </motion.p>
 
               <div className="story-text-container max-w-5xl mx-auto mb-8 sm:mb-12 md:mb-20 px-2 sm:px-4">
-                <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-light leading-relaxed sm:leading-loose font-manrope">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-light leading-relaxed sm:leading-loose font-inter">
                   {story.text.split(" ").map((word, wordIndex) => (
                     <span
                       key={wordIndex}
@@ -861,7 +857,7 @@ export default function TheLastNote() {
 
             {/* Decorative Elements */}
             <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-16 right-2 sm:right-4 md:right-8 lg:right-16 opacity-10">
-              <div className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-bold font-manrope">
+              <div className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-bold font-anton">
                 {String(index + 1).padStart(2, "0")}
               </div>
             </div>
@@ -880,7 +876,7 @@ export default function TheLastNote() {
                 }}
               >
                 <div className="w-px h-8 md:h-16 bg-white/30"></div>
-                <div className="text-xs tracking-widest font-manrope text-white/50 mt-2">CONTINUE</div>
+                <div className="text-xs tracking-widest font-inter text-white/50 mt-2">CONTINUE</div>
               </motion.div>
             )}
           </div>
@@ -897,10 +893,10 @@ export default function TheLastNote() {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-4 md:mb-6 tracking-wide font-manrope">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-4 md:mb-6 tracking-wide font-bebas uppercase">
               NEW RELEASES
             </h2>
-            <p className="text-base sm:text-lg md:text-xl font-light opacity-70 max-w-3xl mx-auto font-manrope">
+            <p className="text-base sm:text-lg md:text-xl font-light opacity-70 max-w-3xl mx-auto font-inter">
               Our latest musical journeys, crafted in the shadows and brought to light.
             </p>
           </motion.div>
@@ -945,13 +941,13 @@ export default function TheLastNote() {
                 </div>
 
                 <div className="text-center">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 font-manrope group-hover:text-amber-200 transition-colors">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 font-inter group-hover:text-amber-200 transition-colors">
                     {release.title}
                   </h3>
-                  <p className="text-amber-200/80 mb-2 font-manrope text-sm sm:text-base">
+                  <p className="text-amber-200/80 mb-2 font-inter text-sm sm:text-base">
                     {release.type} • {release.date}
                   </p>
-                  <p className="text-xs sm:text-sm opacity-60 font-manrope">{release.tracks} tracks</p>
+                  <p className="text-xs sm:text-sm opacity-60 font-inter">{release.tracks} tracks</p>
                 </div>
               </motion.div>
             ))}
@@ -1015,7 +1011,7 @@ export default function TheLastNote() {
               transition={{ duration: 1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 font-manrope">Navigate</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 font-bebas uppercase">Navigate</h3>
               <nav className="space-y-3 md:space-y-4">
                 {[
           { label: "About", href: "/about" },
@@ -1027,7 +1023,7 @@ export default function TheLastNote() {
           <motion.a
             key={item.label}
             href={item.href}
-                    className="footer-nav-item block text-base md:text-lg font-light tracking-wider hover:text-amber-200 transition-colors duration-300 font-manrope relative group"
+                    className="footer-nav-item block text-base md:text-lg font-light tracking-wider hover:text-amber-200 transition-colors duration-300 font-inter relative group"
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.6 }}
@@ -1049,7 +1045,7 @@ export default function TheLastNote() {
               transition={{ delay: 0.2, duration: 1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 font-manrope">Connect</h3>
+              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 font-bebas uppercase">Connect</h3>
               <div className="space-y-3 md:space-y-4">
              {[
       {
@@ -1073,7 +1069,7 @@ export default function TheLastNote() {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-                    className="flex items-center space-x-2 md:space-x-3 text-base md:text-lg font-light hover:text-amber-200 transition-colors duration-300 font-manrope group"
+                    className="flex items-center space-x-2 md:space-x-3 text-base md:text-lg font-light hover:text-amber-200 transition-colors duration-300 font-inter group"
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1, duration: 0.6 }}
@@ -1093,8 +1089,8 @@ export default function TheLastNote() {
               transition={{ delay: 0.4, duration: 1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 font-manrope">Reach Out</h3>
-              <div className="space-y-3 md:space-y-4 text-base md:text-lg font-light font-manrope">
+              <h3 className="text-xl md:text-2xl font-bold mb-6 md:mb-8 font-bebas uppercase">Reach Out</h3>
+              <div className="space-y-3 md:space-y-4 text-base md:text-lg font-light font-inter">
                 <p>
   <a href="mailto:booking@thelastnote.com?subject=Booking Inquiry" className="text-white hover:text-amber-200 hover:underline hover:underline-offset-2 transition-colors duration-300">
     booking@thelastnote.com
@@ -1115,11 +1111,11 @@ export default function TheLastNote() {
           </div>
 
           <div className="status-bar text-center mb-8 md:mb-12">
-            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 text-xs md:text-sm font-mono font-manrope">
+            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 text-xs md:text-sm font-mono font-jetbrains">
               {[
                 { status: "All systems operational", color: "bg-green-400" },
                 { status: "API operational", color: "bg-green-400" },
-                { status: "Ticketing Form", color: "bg-red-400" },
+                { status: "Ticketing Form", color: "bg-red-600" },
               ].map((item, index) => (
                 <motion.span
                   key={index}
@@ -1142,7 +1138,7 @@ export default function TheLastNote() {
           </div>
 
           <motion.div
-            className="text-center text-xs sm:text-sm md:text-base opacity-60 max-w-2xl mx-auto font-manrope footer-credits"
+            className="text-center text-xs sm:text-sm md:text-base opacity-60 max-w-2xl mx-auto font-inter footer-credits"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 0.6 }}
             transition={{ delay: 1, duration: 1 }}
@@ -1152,12 +1148,10 @@ export default function TheLastNote() {
             Made with an *unhealthy* amount of love, wildly unnecessary perfectionism, and a long list of questionable life choices.
             </p>
             <p className="mb-2">
-            Proudly brought to you by the unpaid intern — <span className="text-amber-200 font-semibold">Niraj</span>.
+            Proudly brought to you by  — <span className="text-amber-200 font-semibold">Niraj</span>.
             </p>
-            <p className="text-xs opacity-40">
-             The greatest artist of our time. Possibly of all time — <span className="text-amber-200 font-semibold">Kanye West</span>.
-              <br className="hidden md:block" />
-              (Taylor could never.)
+            <p className="text-amber-200 font-bold">
+              © {new Date().getFullYear()} The Last Note. All rights reserved.
             </p>
           </motion.div>
         </div>
@@ -1214,7 +1208,7 @@ export default function TheLastNote() {
 
         
             <div
-              className="h-full w-full overflow-y-auto overflow-x-hidden"
+              className="h-full w-full overflow-y-auto overflow-x-hidden jam-nights-no-scroll"
               style={{
                 height: "100vh",
                 overflowY: "auto",
@@ -1231,7 +1225,7 @@ export default function TheLastNote() {
                     transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
                   >
                     <motion.h1
-                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold mb-4 sm:mb-6 md:mb-8 tracking-wider font-manrope text-white"
+                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold mb-4 sm:mb-6 md:mb-8 tracking-wider font-bebas text-white uppercase"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.4, duration: 1.2, ease: "easeOut" }}
@@ -1239,7 +1233,7 @@ export default function TheLastNote() {
                       Jam Nights
                     </motion.h1>
                     <motion.p
-                      className="text-base sm:text-lg md:text-xl lg:text-2xl font-light opacity-70 mb-8 sm:mb-12 md:mb-16 font-manrope text-white max-w-4xl mx-auto"
+                      className="text-base sm:text-lg md:text-xl lg:text-2xl font-light opacity-70 mb-8 sm:mb-12 md:mb-16 font-inter text-white max-w-4xl mx-auto"
                       initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
@@ -1252,7 +1246,7 @@ export default function TheLastNote() {
                       transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
                     >
                       <div className="w-px h-8 sm:h-12 md:h-16 bg-white/20 mx-auto mb-4"></div>
-                      <p className="text-xs sm:text-sm tracking-widest font-manrope text-white/60">SCROLL TO EXPLORE</p>
+                      <p className="text-xs sm:text-sm tracking-widest font-inter text-white/60">SCROLL TO EXPLORE</p>
                     </motion.div>
                   </motion.div>
                 </section>
@@ -1260,16 +1254,16 @@ export default function TheLastNote() {
                 <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 bg-black">
                   <div className="max-w-5xl mx-auto text-center">
                     <motion.h2
-                      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 md:mb-16 font-manrope text-white"
+                      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 md:mb-16 font-bebas text-white uppercase"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 1 }}
                       viewport={{ once: true }}
                     >
-                      The Underground Experience
+                      lorem5  
                     </motion.h2>
                     <motion.div
-                      className="space-y-6 sm:space-y-8 text-base sm:text-lg md:text-xl font-light leading-relaxed font-manrope text-white/80"
+                      className="space-y-6 sm:space-y-8 text-base sm:text-lg md:text-xl font-light leading-relaxed font-inter text-white/80"
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2, duration: 1 }}
@@ -1289,7 +1283,7 @@ export default function TheLastNote() {
                         viewport={{ once: true }}
                       >
                         <div className="inline-block px-6 py-2 border border-white/20 rounded-sm">
-                          <span className="text-lg font-manrope text-white">
+                          <span className="text-lg font-inter text-white">
                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque molestiae id sed veritatis atque sequi blanditiis officia fugit consectetur?
                           </span>
                         </div>
@@ -1302,7 +1296,7 @@ export default function TheLastNote() {
                 <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 bg-black border-t border-white/10">
                   <div className="max-w-7xl mx-auto">
                     <motion.h2
-                      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 font-manrope text-white"
+                      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 font-bebas text-white uppercase"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 1 }}
@@ -1325,27 +1319,27 @@ export default function TheLastNote() {
                           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                           <div className="relative z-10">
-                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white font-manrope flex items-center group-hover:text-amber-200 transition-colors duration-300">
+                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white font-inter flex items-center group-hover:text-amber-200 transition-colors duration-300">
                               <Music className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 mr-3 sm:mr-4" />
                               Performer
                             </h3>
-                            <p className="text-base sm:text-lg md:text-xl opacity-70 mb-8 sm:mb-10 md:mb-12 font-manrope text-white leading-relaxed">
+                            <p className="text-base sm:text-lg md:text-xl opacity-70 mb-8 sm:mb-10 md:mb-12 font-inter text-white leading-relaxed">
                              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam illum corrupti deserunt beatae non amet cupiditate harum ut inventore saepe!
                             </p>
 
                             <div className="space-y-6 sm:space-y-8">
                               <div className="text-center">
-                                <h4 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 font-manrope text-white">
+                                <h4 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 font-inter text-white">
                                   Apply to Perform
                                 </h4>
-                                <p className="text-white/60 mb-6 sm:mb-8 font-manrope text-sm sm:text-base">
+                                <p className="text-white/60 mb-6 sm:mb-8 font-inter text-sm sm:text-base">
                                   Fill out our application form to be considered for upcoming sessions.
                                 </p>
                                 <motion.a
                                   href="#"
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-block w-full backdrop-blur-sm bg-white/20 hover:bg-white/30 border border-white/30 hover:border-white/40 text-white py-4 px-8 text-lg font-semibold rounded-xl transition-all duration-300 font-manrope"
+                                  className="inline-block w-full backdrop-blur-sm bg-white/20 hover:bg-white/30 border border-white/30 hover:border-white/40 text-white py-4 px-8 text-lg font-semibold rounded-xl transition-all duration-300 font-inter"
                                   whileHover={{ scale: 1.02, y: -2 }}
                                   whileTap={{ scale: 0.98 }}
                                 >
@@ -1354,8 +1348,8 @@ export default function TheLastNote() {
                               </div>
 
                               <div className="pt-8 border-t border-white/20">
-                                <h5 className="text-lg font-semibold mb-4 font-manrope text-white">What to expect:</h5>
-                                <ul className="space-y-3 text-white/70 font-manrope">
+                                <h5 className="text-lg font-semibold mb-4 font-inter text-white">What to expect:</h5>
+                                <ul className="space-y-3 text-white/70 font-inter">
                                   <li className="flex items-center">
                                     <div className="w-2 h-2 bg-amber-400 rounded-full mr-3"></div>
                                       Lorem ipsum dolor sit amet.
@@ -1398,27 +1392,27 @@ export default function TheLastNote() {
                           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                           <div className="relative z-10">
-                            <h3 className="text-4xl font-bold mb-8 text-white font-manrope flex items-center group-hover:text-blue-200 transition-colors duration-300">
+                            <h3 className="text-4xl font-bold mb-8 text-white font-inter flex items-center group-hover:text-blue-200 transition-colors duration-300">
                               <Users className="w-10 h-10 mr-4" />
                               Audience
                             </h3>
-                            <p className="text-xl opacity-70 mb-12 font-manrope text-white leading-relaxed">
+                            <p className="text-xl opacity-70 mb-12 font-inter text-white leading-relaxed">
                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus nostrum ullam obcaecati placeat rerum alias error odit qui illum praesentium!
                             </p>
 
                             <div className="space-y-8">
                               <div className="text-center">
-                                <h4 className="text-2xl font-semibold mb-4 font-manrope text-white">
+                                <h4 className="text-2xl font-semibold mb-4 font-inter text-white">
                                   Request Invitation
                                 </h4>
-                                <p className="text-white/60 mb-8 font-manrope">
+                                <p className="text-white/60 mb-8 font-inter">
                                   Join our exclusive audience for an unforgettable musical experience.
                                 </p>
                                 <motion.a
                                   href="https://forms.gle/sjakakaaaaaaaa"
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-block w-full backdrop-blur-sm bg-white/20 hover:bg-white/30 border border-white/30 hover:border-white/40 text-white py-4 px-8 text-lg font-semibold rounded-xl transition-all duration-300 font-manrope"
+                                  className="inline-block w-full backdrop-blur-sm bg-white/20 hover:bg-white/30 border border-white/30 hover:border-white/40 text-white py-4 px-8 text-lg font-semibold rounded-xl transition-all duration-300 font-inter"
                                   whileHover={{ scale: 1.02, y: -2 }}
                                   whileTap={{ scale: 0.98 }}
                                 >
@@ -1427,10 +1421,10 @@ export default function TheLastNote() {
                               </div>
 
                               <div className="pt-8 border-t border-white/20">
-                                <h5 className="text-lg font-semibold mb-4 font-manrope text-white">
+                                <h5 className="text-lg font-semibold mb-4 font-inter text-white">
                                   Experience includes:
                                 </h5>
-                                <ul className="space-y-3 text-white/70 font-manrope">
+                                <ul className="space-y-3 text-white/70 font-inter">
                                   <li className="flex items-center">
                                     <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
                                       Lorem ipsum dolor sit amet.
@@ -1468,7 +1462,7 @@ export default function TheLastNote() {
                 <section className="py-32 px-8 bg-black border-t border-white/10">
                   <div className="max-w-6xl mx-auto">
                     <motion.h2
-                      className="text-6xl font-bold text-center mb-20 font-manrope text-white"
+                      className="text-6xl font-bold text-center mb-20 font-inter text-white"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 1 }}
@@ -1536,28 +1530,28 @@ END:VCALENDAR`
 
                              
                               <div className="absolute top-6 right-6 backdrop-blur-sm bg-white/10 border border-white/20 rounded-xl px-4 py-2">
-                                <div className="text-2xl font-bold text-white font-manrope">
+                                <div className="text-2xl font-bold text-white font-inter">
                                   {sessionDate.getDate()}
                                 </div>
-                                <div className="text-xs text-white/70 font-manrope uppercase text-center">
+                                <div className="text-xs text-white/70 font-inter uppercase text-center">
                                   {sessionDate.toLocaleDateString("en-US", { month: "short" })}
                                 </div>
                               </div>
 
                               
                               <div className="relative z-10">
-                                <h3 className="text-3xl font-bold mb-3 font-manrope text-white group-hover:text-amber-200 transition-colors duration-300">
+                                <h3 className="text-3xl font-bold mb-3 font-inter text-white group-hover:text-amber-200 transition-colors duration-300">
                                   {session.title}
                                 </h3>
-                                <p className="text-white/70 mb-6 font-manrope leading-relaxed">{session.description}</p>
+                                <p className="text-white/70 mb-6 font-inter leading-relaxed">{session.description}</p>
 
                                 
                                 <div className="space-y-2 mb-8">
-                                  <div className="flex items-center text-white/90 font-manrope">
+                                  <div className="flex items-center text-white/90 font-inter">
                                     <div className="w-2 h-2 bg-amber-400 rounded-full mr-3"></div>
                                     {formattedDate}
                                   </div>
-                                  <div className="flex items-center text-white/90 font-manrope">
+                                  <div className="flex items-center text-white/90 font-inter">
                                     <div className="w-2 h-2 bg-amber-400 rounded-full mr-3"></div>
                                     {formattedTime}
                                   </div>
@@ -1569,7 +1563,7 @@ END:VCALENDAR`
                                     href={googleCalendarUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex-1 flex items-center justify-center px-4 py-3 backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 rounded-xl text-white font-manrope text-sm font-medium transition-all duration-300"
+                                    className="flex-1 flex items-center justify-center px-4 py-3 backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 rounded-xl text-white font-inter text-sm font-medium transition-all duration-300"
                                     whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.98 }}
                                   >
@@ -1579,7 +1573,7 @@ END:VCALENDAR`
                                   <motion.a
                                     href={appleCalendarUrl}
                                     download={`${session.title.replace(/\s+/g, "_")}.ics`}
-                                    className="flex-1 flex items-center justify-center px-4 py-3 backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 rounded-xl text-white font-manrope text-sm font-medium transition-all duration-300"
+                                    className="flex-1 flex items-center justify-center px-4 py-3 backdrop-blur-sm bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 rounded-xl text-white font-inter text-sm font-medium transition-all duration-300"
                                     whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.98 }}
                                   >
@@ -1610,15 +1604,15 @@ END:VCALENDAR`
                         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                         <div className="relative z-10">
-                          <h3 className="text-3xl font-bold mb-4 font-manrope text-white">Regular Schedule</h3>
-                          <p className="text-xl text-white/80 mb-8 font-manrope">
+                          <h3 className="text-3xl font-bold mb-4 font-inter text-white">Regular Schedule</h3>
+                          <p className="text-xl text-white/80 mb-8 font-inter">
                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam facere eum autem fugiat amet sapiente rem odit nihil doloribus nostrum, cum consectetur natus consequuntur fuga!
                           </p>
                           <div className="flex flex-wrap justify-center gap-4">
                             {["WEEKLY", "INTIMATE", "CURATED", "UNFORGETTABLE"].map((tag, index) => (
                               <div
                                 key={tag}
-                                className="px-6 py-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-full text-sm tracking-wider font-manrope text-white/80 hover:bg-white/20 hover:text-white transition-all duration-300"
+                                className="px-6 py-2 backdrop-blur-sm bg-white/10 border border-white/20 rounded-full text-sm tracking-wider font-inter text-white/80 hover:bg-white/20 hover:text-white transition-all duration-300"
                               >
                                 {tag}
                               </div>
@@ -1637,7 +1631,7 @@ END:VCALENDAR`
                 <section className="py-32 px-8 bg-black border-t border-white/10">
                   <div className="max-w-7xl mx-auto">
                     <motion.h2
-                      className="text-6xl font-bold text-center mb-20 font-manrope text-white"
+                      className="text-6xl font-bold text-center mb-20 font-inter text-white"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 1 }}
@@ -1685,9 +1679,9 @@ END:VCALENDAR`
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                           <div className="absolute bottom-0 left-0 right-0 p-6">
-                            <h3 className="text-2xl font-bold mb-2 font-manrope text-white">{session.title}</h3>
-                            <p className="text-white/60 mb-2 font-manrope">{session.date}</p>
-                            <p className="text-white/80 font-manrope text-sm">{session.description}</p>
+                            <h3 className="text-2xl font-bold mb-2 font-inter text-white">{session.title}</h3>
+                            <p className="text-white/60 mb-2 font-inter">{session.date}</p>
+                            <p className="text-white/80 font-inter text-sm">{session.description}</p>
                           </div>
                         </motion.div>
                       ))}
@@ -1701,11 +1695,34 @@ END:VCALENDAR`
       </AnimatePresence>
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Permanent+Marker&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Anton&family=Bebas+Neue&family=Oswald:wght@200..700&family=Righteous&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Creepster&family=Nosifer&family=Metal+Mania&family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Permanent+Marker&display=swap');
         
-        .font-manrope {
-          font-family: 'Manrope', sans-serif;
+        .font-inter {
+          font-family: 'Inter', sans-serif;
+        }
+        
+        .font-anton {
+          font-family: 'Anton', sans-serif;
+        }
+        
+        .font-bebas {
+          font-family: 'Bebas Neue', cursive;
+        }
+        
+        .font-oswald {
+          font-family: 'Oswald', sans-serif;
+        }
+        
+        .font-righteous {
+          font-family: 'Righteous', cursive;
+        }
+        
+        .font-jetbrains {
+          font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .font-metal {
+          font-family: 'Metal Mania', cursive;
         }
         
         html {
@@ -1713,7 +1730,7 @@ END:VCALENDAR`
         }
         
         body {
-          font-family: 'Manrope', sans-serif;
+          font-family: 'Inter', sans-serif;
           overflow-x: hidden;
         }
 
@@ -1721,18 +1738,18 @@ END:VCALENDAR`
         ::-webkit-scrollbar {
           width: 6px;
           height: 6px;
-          background: transparent;
+          background: rgba(0, 0, 0, 0.8);
         }
         
         ::-webkit-scrollbar-track {
-          background: transparent !important;
+          background: rgba(0, 0, 0, 0.5) !important;
           border: none !important;
           box-shadow: none !important;
           -webkit-appearance: none;
         }
         
         ::-webkit-scrollbar-track-piece {
-          background: transparent !important;
+          background: rgba(0, 0, 0, 0.5) !important;
           border: none !important;
           box-shadow: none !important;
         }
@@ -1750,13 +1767,32 @@ END:VCALENDAR`
         }
 
         ::-webkit-scrollbar-corner {
+          background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Jam Nights - NO scrollbar */
+        .jam-nights-no-scroll::-webkit-scrollbar {
+          width: 0px;
           background: transparent;
+        }
+        
+        .jam-nights-no-scroll::-webkit-scrollbar-track {
+          background: transparent !important;
+        }
+        
+        .jam-nights-no-scroll::-webkit-scrollbar-thumb {
+          background: transparent !important;
         }
 
         /* Firefox scrollbar */
         html {
           scrollbar-width: thin;
-          scrollbar-color: rgba(245, 158, 11, 0.8) transparent;
+          scrollbar-color: rgba(245, 158, 11, 0.8) rgba(0, 0, 0, 0.5);
+        }
+
+        /* Firefox - no scrollbar for jam nights */
+        .jam-nights-no-scroll {
+          scrollbar-width: none;
         }
 
         /* Video optimizations */
@@ -1995,7 +2031,7 @@ END:VCALENDAR`
 
         /* Special font for footer credits */
         .footer-credits {
-          font-family: 'Bitcount Single', 'Orbitron', monospace !important;
+          font-family: 'JetBrains Mono', 'Inter', monospace !important;
         }
       `}</style>
     </div>
