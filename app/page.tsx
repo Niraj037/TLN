@@ -20,12 +20,6 @@ export default function TheLastNote() {
   const [isLoading, setIsLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
 
-  const [fps, setFps] = useState(0)
-  const [showFps, setShowFps] = useState(false)
-  const fpsRef = useRef(0)
-  const frameCountRef = useRef(0)
-  const lastTimeRef = useRef(performance.now())
-
   const heroRef = useRef<HTMLDivElement>(null)
   const storyContainerRef = useRef<HTMLDivElement>(null)
   const footerRef = useRef<HTMLDivElement>(null)
@@ -65,46 +59,6 @@ export default function TheLastNote() {
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [isMobile])
-
-  // FPS Counter
-  useEffect(() => {
-    let animationId: number
-
-    const updateFPS = () => {
-      frameCountRef.current++
-      const now = performance.now()
-
-      if (now - lastTimeRef.current >= 1000) {
-        setFps(Math.round((frameCountRef.current * 1000) / (now - lastTimeRef.current)))
-        frameCountRef.current = 0
-        lastTimeRef.current = now
-      }
-
-      animationId = requestAnimationFrame(updateFPS)
-    }
-
-    if (showFps) {
-      updateFPS()
-    }
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId)
-      }
-    }
-  }, [showFps])
-
-  // Toggle FPS counter with F key
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === "f" || e.key === "F") {
-        setShowFps((prev) => !prev)
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyPress)
-    return () => window.removeEventListener("keydown", handleKeyPress)
-  }, [])
 
   const stories = [
     {
@@ -724,7 +678,7 @@ export default function TheLastNote() {
 
   return (
     <div className="bg-black text-white min-h-screen overflow-x-hidden font-manrope">
-      {/* Optimized mouse-following light effect (desktop only) */}
+      {/* Mouse-following light effect (desktop only) */}
       {!isMobile && (
         <motion.div
           className="fixed w-80 h-80 pointer-events-none z-10 mix-blend-screen"
@@ -758,67 +712,50 @@ export default function TheLastNote() {
             muted
             loop
             playsInline
-            className="w-full h-full object-cover opacity-40">
+            preload="metadata"
+            className="hero-video w-full h-full object-cover opacity-40"
+            style={{
+              willChange: "transform",
+              transform: "translateZ(0)",
+              backfaceVisibility: "hidden",
+            }}
+          >
             <source src="/vids/drumkit.mp4?height=1080&width=1920" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/90" />
         </div>
 
-        <motion.div className="relative z-10 text-center px-4" style={{ y: textParallax }}>
-          <h1 className="hero-title text-3xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-bold tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.3em] mb-3 sm:mb-4 md:mb-8 font-manrope leading-tight">
-          The Last Note
+        <motion.div className="relative z-10 text-center px-4 sm:px-6 md:px-8" style={{ y: textParallax }}>
+          <h1 className="hero-title text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[10rem] 2xl:text-[14rem] font-bold tracking-[0.02em] sm:tracking-[0.05em] md:tracking-[0.08em] lg:tracking-[0.1em] mb-4 sm:mb-6 md:mb-8 font-manrope leading-[0.8] sm:leading-[0.85] md:leading-[0.9]">
+            The Last Note
           </h1>
-          <p className="hero-subtitle text-xs sm:text-sm md:text-lg lg:text-xl font-light tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] opacity-60 font-manrope">
+          <p className="hero-subtitle text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-light tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] lg:tracking-[0.3em] opacity-60 font-manrope max-w-6xl mx-auto">
             Lorem ipsum dolor sit amet.
           </p>
         </motion.div>
 
         {/* Jam Nights Portal Button */}
         <motion.div
-          className="absolute bottom-4 md:bottom-8 left-4 md:left-8 z-20"
+          className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 z-20"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 3, duration: 1.5, ease: "easeOut" }}
         >
           <button
             onClick={() => setJamNightsOpen(true)}
-            className="group relative px-4 md:px-6 py-2 md:py-3 border border-white/10 hover:border-white/30 transition-all duration-1000 bg-black/60 backdrop-blur-sm overflow-hidden"
+            className="group relative px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 border border-white/10 hover:border-white/30 transition-all duration-1000 bg-black/60 backdrop-blur-sm overflow-hidden rounded-sm"
           >
-            <div className="flex items-center space-x-2 md:space-x-3 relative z-10">
-              <Music className="w-4 h-4 md:w-5 md:h-5 group-hover:text-white transition-colors duration-700" />
-              <span className="text-xs md:text-sm tracking-[0.2em] font-manrope group-hover:text-white transition-colors duration-700">
-                Lorem ipsum dolor sit amet.
+            <div className="flex items-center space-x-2 sm:space-x-2.5 md:space-x-3 relative z-10">
+              <Music className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:text-white transition-colors duration-700" />
+              <span className="text-xs sm:text-sm md:text-base tracking-[0.15em] sm:tracking-[0.2em] font-manrope group-hover:text-white transition-colors duration-700">
+                JAM NIGHTS
               </span>
             </div>
-            <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-1000 easeOut" />
+            <div className="absolute inset-0 bg-white/5 translate-y-full group-hover:translate-y-0 transition-transform duration-1000 ease-out" />
           </button>
         </motion.div>
 
         {/* Story Progress Indicator (desktop only) */}
-        {!isMobile && (
-          <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20">
-            <div className="relative">
-              <div className="w-px h-32 bg-white/10"></div>
-              <motion.div
-                className="story-progress-line absolute top-0 left-0 w-px bg-white origin-top"
-                style={{ scaleY: storyProgress }}
-              />
-              <div className="absolute -left-2 flex flex-col space-y-8 mt-4">
-                {stories.map((_, index) => (
-                  <motion.div
-                    key={index}
-                    className={`w-1 h-1 rounded-full transition-all duration-700 ${
-                      index === currentStoryIndex ? "bg-white scale-150" : "bg-white/20"
-                    }`}
-                    animate={{
-                      backgroundColor: index === currentStoryIndex ? "#ffffff" : "rgba(255,255,255,0.2)",
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
       </motion.section>
 
       {/* Story Section */}
@@ -835,8 +772,14 @@ export default function TheLastNote() {
                 muted
                 loop
                 playsInline
+                preload="metadata"
                 className="story-bg-video w-full h-full object-cover"
                 poster={story.image}
+                style={{
+                  willChange: "transform",
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
+                }}
               >
                 <source src={story.video} type="video/mp4" />
               </video>
@@ -848,34 +791,34 @@ export default function TheLastNote() {
             </div>
 
             {/* Year Display */}
-            <div className="story-year absolute top-8 md:top-16 left-4 md:left-8 lg:left-16">
-              <span className="text-[8rem] md:text-[15rem] lg:text-[20rem] font-bold opacity-5 font-manrope leading-none select-none">
+            <div className="story-year absolute top-4 sm:top-6 md:top-8 lg:top-16 left-2 sm:left-4 md:left-8 lg:left-16">
+              <span className="text-[4rem] sm:text-[6rem] md:text-[10rem] lg:text-[15rem] xl:text-[20rem] font-bold opacity-5 font-manrope leading-none select-none">
                 {story.year}
               </span>
             </div>
 
             {/* Story Content */}
-            <div className="relative z-10 max-w-6xl mx-auto px-4 md:px-8 text-center">
+            <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 md:px-8 text-center">
               <motion.h2
-                className="story-title text-3xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6 tracking-wide font-manrope leading-tight"
+                className="story-title text-2xl sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-3 sm:mb-4 md:mb-6 tracking-wide font-manrope leading-tight"
                 style={{ perspective: isMobile ? "none" : "1000px" }}
               >
                 {story.title}
               </motion.h2>
 
               <motion.p
-                className="story-subtitle text-lg md:text-xl lg:text-2xl font-light mb-8 md:mb-16 opacity-70 font-manrope tracking-wider"
+                className="story-subtitle text-base sm:text-lg md:text-xl lg:text-2xl font-light mb-6 sm:mb-8 md:mb-16 opacity-70 font-manrope tracking-wider max-w-4xl mx-auto"
                 style={{ perspective: isMobile ? "none" : "1000px" }}
               >
                 {story.subtitle}
               </motion.p>
 
-              <div className="story-text-container max-w-5xl mx-auto mb-12 md:mb-20">
-                <p className="text-base md:text-lg lg:text-2xl font-light leading-relaxed font-manrope">
+              <div className="story-text-container max-w-5xl mx-auto mb-8 sm:mb-12 md:mb-20 px-2 sm:px-4">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-light leading-relaxed sm:leading-loose font-manrope">
                   {story.text.split(" ").map((word, wordIndex) => (
                     <span
                       key={wordIndex}
-                      className="story-text-word inline-block mr-2"
+                      className="story-text-word inline-block mr-1 sm:mr-2"
                       style={{ perspective: isMobile ? "none" : "1000px" }}
                     >
                       {word}
@@ -885,11 +828,11 @@ export default function TheLastNote() {
               </div>
 
               {/* Story Navigation */}
-              <div className="flex justify-center space-x-4 md:space-x-6">
+              <div className="flex justify-center space-x-1.5 sm:space-x-2 md:space-x-3 lg:space-x-4">
                 {stories.map((_, dotIndex) => (
                   <button
                     key={dotIndex}
-                    className={`story-nav-dot relative w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-700 group ${
+                    className={`story-nav-dot relative w-0.5 h-0.5 xs:w-1 xs:h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2 rounded-full transition-all duration-700 group ${
                       dotIndex === index ? "bg-white scale-125" : "bg-white/20 hover:bg-white/50 hover:scale-110"
                     }`}
                     onClick={() => {
@@ -899,7 +842,7 @@ export default function TheLastNote() {
                   >
                     {dotIndex === index && (
                       <motion.div
-                        className="absolute inset-0 rounded-full border-2 border-white"
+                        className="absolute inset-0 rounded-full border border-white"
                         animate={{
                           scale: [1, 1.5, 1],
                           opacity: [1, 0, 1],
@@ -917,8 +860,8 @@ export default function TheLastNote() {
             </div>
 
             {/* Decorative Elements */}
-            <div className="absolute bottom-8 md:bottom-16 right-4 md:right-8 lg:right-16 opacity-10">
-              <div className="text-4xl md:text-8xl lg:text-9xl font-bold font-manrope">
+            <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-16 right-2 sm:right-4 md:right-8 lg:right-16 opacity-10">
+              <div className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl xl:text-9xl font-bold font-manrope">
                 {String(index + 1).padStart(2, "0")}
               </div>
             </div>
@@ -954,10 +897,10 @@ export default function TheLastNote() {
             transition={{ duration: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-6 tracking-wide font-manrope">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold mb-4 md:mb-6 tracking-wide font-manrope">
               NEW RELEASES
             </h2>
-            <p className="text-lg md:text-xl font-light opacity-70 max-w-3xl mx-auto font-manrope">
+            <p className="text-base sm:text-lg md:text-xl font-light opacity-70 max-w-3xl mx-auto font-manrope">
               Our latest musical journeys, crafted in the shadows and brought to light.
             </p>
           </motion.div>
@@ -983,10 +926,18 @@ export default function TheLastNote() {
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-500" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="flex space-x-4">
-                      <button className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                      <button 
+                        className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                        aria-label={`Play ${release.title}`}
+                        title={`Play ${release.title}`}
+                      >
                         <Play className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </button>
-                      <button className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors">
+                      <button 
+                        className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                        aria-label={`Download ${release.title}`}
+                        title={`Download ${release.title}`}
+                      >
                         <Download className="w-5 h-5 md:w-6 md:h-6 text-white" />
                       </button>
                     </div>
@@ -994,13 +945,13 @@ export default function TheLastNote() {
                 </div>
 
                 <div className="text-center">
-                  <h3 className="text-xl md:text-2xl font-bold mb-2 font-manrope group-hover:text-amber-200 transition-colors">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 font-manrope group-hover:text-amber-200 transition-colors">
                     {release.title}
                   </h3>
-                  <p className="text-amber-200/80 mb-2 font-manrope">
+                  <p className="text-amber-200/80 mb-2 font-manrope text-sm sm:text-base">
                     {release.type} • {release.date}
                   </p>
-                  <p className="text-sm opacity-60 font-manrope">{release.tracks} tracks</p>
+                  <p className="text-xs sm:text-sm opacity-60 font-manrope">{release.tracks} tracks</p>
                 </div>
               </motion.div>
             ))}
@@ -1047,20 +998,8 @@ export default function TheLastNote() {
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <motion.div
             className="footer-signature select-none whitespace-nowrap transform -rotate-12"
-            style={{
-              fontSize: "clamp(8rem, 25vw, 30rem)",
-              fontFamily: "'Kalam', 'Caveat', 'Permanent Marker', cursive",
-              fontWeight: "bold",
-              color: "rgba(255, 255, 255, 0.25)",
-              textShadow: "0 0 100px rgba(255,255,255,0.1)",
-              lineHeight: "0.8",
-              letterSpacing: "-0.05em",
-              transform: "rotate(-12deg) skew(-5deg, 2deg)",
-            }}
             whileHover={{
-              color: "rgba(255, 255, 255, 0.35)",
               scale: 1.02,
-              rotationY: 5,
               transition: { duration: 0.8 },
             }}
           >
@@ -1203,8 +1142,7 @@ export default function TheLastNote() {
           </div>
 
           <motion.div
-            className="text-center text-xs md:text-sm opacity-60 max-w-2xl mx-auto"
-            style={{ fontFamily: "Bitcount Single" }}
+            className="text-center text-xs sm:text-sm md:text-base opacity-60 max-w-2xl mx-auto font-manrope footer-credits"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 0.6 }}
             transition={{ delay: 1, duration: 1 }}
@@ -1225,7 +1163,7 @@ export default function TheLastNote() {
         </div>
 
         <div className="absolute inset-0 opacity-5 pointer-events-none">
-          {[...Array(isMobile ? 8 : 15)].map((_, i) => (
+          {[...Array(isMobile ? 4 : 8)].map((_, i) => (
             <motion.div
               key={i}
               className="floating-particle absolute w-1 h-1 bg-white rounded-full"
@@ -1293,7 +1231,7 @@ export default function TheLastNote() {
                     transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
                   >
                     <motion.h1
-                      className="text-5xl md:text-7xl lg:text-9xl font-bold mb-6 md:mb-8 tracking-wider font-manrope text-white"
+                      className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bold mb-4 sm:mb-6 md:mb-8 tracking-wider font-manrope text-white"
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.4, duration: 1.2, ease: "easeOut" }}
@@ -1301,7 +1239,7 @@ export default function TheLastNote() {
                       Jam Nights
                     </motion.h1>
                     <motion.p
-                      className="text-lg md:text-2xl font-light opacity-70 mb-12 md:mb-16 font-manrope text-white"
+                      className="text-base sm:text-lg md:text-xl lg:text-2xl font-light opacity-70 mb-8 sm:mb-12 md:mb-16 font-manrope text-white max-w-4xl mx-auto"
                       initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
@@ -1313,16 +1251,16 @@ export default function TheLastNote() {
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
                     >
-                      <div className="w-px h-12 md:h-16 bg-white/20 mx-auto mb-4"></div>
-                      <p className="text-xs md:text-sm tracking-widest font-manrope text-white/60">SCROLL TO EXPLORE</p>
+                      <div className="w-px h-8 sm:h-12 md:h-16 bg-white/20 mx-auto mb-4"></div>
+                      <p className="text-xs sm:text-sm tracking-widest font-manrope text-white/60">SCROLL TO EXPLORE</p>
                     </motion.div>
                   </motion.div>
                 </section>
 
-                <section className="py-32 px-8 bg-black">
+                <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 bg-black">
                   <div className="max-w-5xl mx-auto text-center">
                     <motion.h2
-                      className="text-6xl font-bold mb-16 font-manrope text-white"
+                      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-12 md:mb-16 font-manrope text-white"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 1 }}
@@ -1331,7 +1269,7 @@ export default function TheLastNote() {
                       The Underground Experience
                     </motion.h2>
                     <motion.div
-                      className="space-y-8 text-xl font-light leading-relaxed font-manrope text-white/80"
+                      className="space-y-6 sm:space-y-8 text-base sm:text-lg md:text-xl font-light leading-relaxed font-manrope text-white/80"
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2, duration: 1 }}
@@ -1361,10 +1299,10 @@ export default function TheLastNote() {
                 </section>
 
                 {/* Registration Forms - Glass Theme */}
-                <section className="py-32 px-8 bg-black border-t border-white/10">
+                <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-8 bg-black border-t border-white/10">
                   <div className="max-w-7xl mx-auto">
                     <motion.h2
-                      className="text-6xl font-bold text-center mb-20 font-manrope text-white"
+                      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 font-manrope text-white"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 1 }}
@@ -1373,7 +1311,7 @@ export default function TheLastNote() {
                       Join the Circle
                     </motion.h2>
 
-                    <div className="grid lg:grid-cols-2 gap-12">
+                    <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
                       {/* Performer Registration */}
                       <motion.div
                         className="relative group"
@@ -1382,25 +1320,25 @@ export default function TheLastNote() {
                         transition={{ duration: 1 }}
                         viewport={{ once: true }}
                       >
-                        <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-12 overflow-hidden hover:bg-white/10 transition-all duration-500">
+                        <div className="relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 overflow-hidden hover:bg-white/10 transition-all duration-500">
                           
                           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                           <div className="relative z-10">
-                            <h3 className="text-4xl font-bold mb-8 text-white font-manrope flex items-center group-hover:text-amber-200 transition-colors duration-300">
-                              <Music className="w-10 h-10 mr-4" />
+                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white font-manrope flex items-center group-hover:text-amber-200 transition-colors duration-300">
+                              <Music className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 mr-3 sm:mr-4" />
                               Performer
                             </h3>
-                            <p className="text-xl opacity-70 mb-12 font-manrope text-white leading-relaxed">
+                            <p className="text-base sm:text-lg md:text-xl opacity-70 mb-8 sm:mb-10 md:mb-12 font-manrope text-white leading-relaxed">
                              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsam illum corrupti deserunt beatae non amet cupiditate harum ut inventore saepe!
                             </p>
 
-                            <div className="space-y-8">
+                            <div className="space-y-6 sm:space-y-8">
                               <div className="text-center">
-                                <h4 className="text-2xl font-semibold mb-4 font-manrope text-white">
+                                <h4 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 font-manrope text-white">
                                   Apply to Perform
                                 </h4>
-                                <p className="text-white/60 mb-8 font-manrope">
+                                <p className="text-white/60 mb-6 sm:mb-8 font-manrope text-sm sm:text-base">
                                   Fill out our application form to be considered for upcoming sessions.
                                 </p>
                                 <motion.a
@@ -1762,21 +1700,6 @@ END:VCALENDAR`
         )}
       </AnimatePresence>
 
-      {showFps && (
-        <motion.div
-          className="fixed top-4 left-4 z-[60] bg-black/80 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 text-xs font-mono text-green-400"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-        >
-          <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span>{fps} FPS</span>
-          </div>
-          <div className="text-white/50 text-[10px] mt-1">Press F to toggle</div>
-        </motion.div>
-      )}
-
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&family=Permanent+Marker&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap');
@@ -1791,24 +1714,148 @@ END:VCALENDAR`
         
         body {
           font-family: 'Manrope', sans-serif;
+          overflow-x: hidden;
         }
 
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-          width: 2px;
-        }
-        
-        ::-webkit-scrollbar-track {
+          width: 6px;
+          height: 6px;
           background: transparent;
         }
         
+        ::-webkit-scrollbar-track {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+          -webkit-appearance: none;
+        }
+        
+        ::-webkit-scrollbar-track-piece {
+          background: transparent !important;
+          border: none !important;
+          box-shadow: none !important;
+        }
+        
         ::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 1px;
+          background: linear-gradient(180deg, rgba(245, 158, 11, 0.8), rgba(217, 119, 6, 1));
+          border-radius: 3px;
+          border: none !important;
+          box-shadow: 0 0 6px rgba(245, 158, 11, 0.4), 0 0 12px rgba(245, 158, 11, 0.2);
         }
         
         ::-webkit-scrollbar-thumb:hover {
-          background: rgba(255, 255, 255, 0.4);
+          background: linear-gradient(180deg, rgba(245, 158, 11, 1), rgba(217, 119, 6, 1));
+          box-shadow: 0 0 8px rgba(245, 158, 11, 0.6), 0 0 16px rgba(245, 158, 11, 0.3);
+        }
+
+        ::-webkit-scrollbar-corner {
+          background: transparent;
+        }
+
+        /* Firefox scrollbar */
+        html {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(245, 158, 11, 0.8) transparent;
+        }
+
+        /* Video optimizations */
+        video {
+          will-change: transform;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+
+        /* Reduce video quality on mobile for performance */
+        @media (max-width: 768px) {
+          video {
+            filter: brightness(0.9) contrast(1.1);
+          }
+        }
+
+        /* Optimize video rendering */
+        .story-bg-video,
+        .hero-video {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+
+        /* Preload and optimize video performance */
+        video[preload="metadata"] {
+          transform: translateZ(0);
+        }
+
+        /* Mobile-first responsive design */
+        @media (max-width: 640px) {
+          .hero-title {
+            font-size: clamp(3.5rem, 18vw, 6rem) !important;
+            line-height: 0.8 !important;
+            letter-spacing: 0.02em !important;
+          }
+          
+          .hero-subtitle {
+            font-size: clamp(1rem, 5vw, 1.5rem) !important;
+            letter-spacing: 0.1em !important;
+          }
+          
+          .story-title {
+            font-size: clamp(1.75rem, 10vw, 3rem) !important;
+          }
+          
+          .story-subtitle {
+            font-size: clamp(1rem, 5vw, 1.5rem) !important;
+          }
+          
+          .story-text-container p {
+            font-size: clamp(0.875rem, 4vw, 1.125rem) !important;
+            line-height: 1.6 !important;
+          }
+          
+          .story-year span {
+            font-size: clamp(3rem, 20vw, 6rem) !important;
+          }
+          
+          /* Ultra small story navigation dots for mobile */
+          .story-nav-dot {
+            width: 0.375rem !important;
+            height: 0.375rem !important;
+            min-width: 0.375rem !important;
+            min-height: 0.375rem !important;
+          }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+          .story-nav-dot {
+            width: 0.25rem !important;
+            height: 0.25rem !important;
+            min-width: 0.25rem !important;
+            min-height: 0.25rem !important;
+          }
+        }
+
+        /* Tablet optimizations */
+        @media (min-width: 641px) and (max-width: 1024px) {
+          .hero-title {
+            font-size: clamp(5rem, 15vw, 8rem) !important;
+          }
+          
+          .story-title {
+            font-size: clamp(2.5rem, 8vw, 5rem) !important;
+          }
+        }
+
+        /* Desktop and larger */
+        @media (min-width: 1025px) {
+          .hero-title {
+            font-size: clamp(6rem, 12vw, 14rem) !important;
+          }
         }
 
         /* Perspective for 3D effects (desktop only) */
@@ -1823,10 +1870,33 @@ END:VCALENDAR`
         @media (max-width: 767px) {
           .story-panel {
             perspective: none;
+            padding: 3rem 1rem !important;
           }
           
           .story-text-word {
             perspective: none !important;
+          }
+          
+          /* Ensure no horizontal overflow */
+          * {
+            max-width: 100%;
+            box-sizing: border-box;
+          }
+          
+          /* Better touch targets */
+          button {
+            min-height: 44px;
+            min-width: 44px;
+          }
+          
+          /* Responsive spacing for jam nights */
+          .jam-nights-section {
+            padding: 2rem 1rem !important;
+          }
+          
+          .jam-nights-card {
+            padding: 1.5rem !important;
+            margin-bottom: 1.5rem !important;
           }
         }
 
@@ -1834,6 +1904,7 @@ END:VCALENDAR`
         * {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
+          box-sizing: border-box;
         }
 
         .floating-particle,
@@ -1844,6 +1915,38 @@ END:VCALENDAR`
           will-change: transform;
           transform: translateZ(0);
           backface-visibility: hidden;
+        }
+
+        /* Video performance optimizations */
+        video {
+          will-change: transform;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          pointer-events: none;
+        }
+
+        /* GPU acceleration for smooth scrolling */
+        .story-panel,
+        .hero-section,
+        .footer-section {
+          transform: translate3d(0, 0, 0);
+          will-change: transform;
+        }
+
+        /* Optimize compositing layers */
+        .story-bg-video,
+        .hero-video {
+          transform: translateZ(0);
+          will-change: transform;
+        }
+
+        /* Reduce video loading on slow connections */
+        @media (max-width: 768px) and (max-resolution: 150dpi) {
+          video {
+            filter: brightness(0.8) contrast(1.2);
+            transform: scale(1.1) translateZ(0);
+          }
         }
 
         /* Reduce animations on low-end devices */
@@ -1860,15 +1963,39 @@ END:VCALENDAR`
           }
         }
 
-        /* Better mobile spacing */
+        /* Prevent horizontal scroll */
+        html, body {
+          overflow-x: hidden;
+          width: 100%;
+        }
+
+        /* Improve mobile readability */
         @media (max-width: 640px) {
-          .story-panel {
-            padding: 2rem 1rem;
+          p, span {
+            word-break: break-word;
+            hyphens: auto;
           }
-          
-          .text-8xl, .text-9xl {
-            font-size: clamp(2rem, 8vw, 4rem) !important;
-          }
+        }
+
+        /* Footer signature styles */
+        .footer-signature {
+          font-size: clamp(4rem, 20vw, 30rem);
+          font-family: 'Kalam', 'Caveat', 'Permanent Marker', cursive;
+          font-weight: bold;
+          color: rgba(255, 255, 255, 0.25);
+          text-shadow: 0 0 100px rgba(255,255,255,0.1);
+          line-height: 0.8;
+          letter-spacing: -0.05em;
+          transform: rotate(-12deg) skew(-5deg, 2deg);
+        }
+
+        .footer-signature:hover {
+          color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Special font for footer credits */
+        .footer-credits {
+          font-family: 'Bitcount Single', 'Orbitron', monospace !important;
         }
       `}</style>
     </div>
